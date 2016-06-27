@@ -18,4 +18,17 @@ describe('client', () => {
       expect(subject.middlewares).toContain(aMiddleware)
     })
   })
+
+  describe('removeMiddleware', () => {
+    const aMiddleware = () => ({})
+
+    beforeEach(() => {
+      subject = createClient({ middlewares: [aMiddleware, { other: true }] })
+    })
+
+    it('removes its middleware', () => {
+      subject.removeMiddleware(aMiddleware)
+      expect(subject.middlewares).not.toContain(aMiddleware)
+    })
+  })
 })

@@ -4,8 +4,10 @@ const handler = {
   },
 }
 
+let idCounter = 27000
+
 class Client {
-  constructor(middlewares) {
+  constructor({ middlewares } = {}) {
     this._middlewares = middlewares || []
   }
 
@@ -14,7 +16,17 @@ class Client {
   }
 
   addMiddleware(newMiddleware) {
+    if (!newMiddleware._middlewareId) {
+      newMiddleware._middlewareId = ++idCounter // eslint-disable-line
+    }
     this._middlewares.push(newMiddleware)
+    return this
+  }
+
+  removeMiddleware(scrapedMiddleware) {
+    this._middlewares = this.middlewares.filter((item) =>
+      item._middlewareId !== scrapedMiddleware._middlewareId
+    )
     return this
   }
 }
