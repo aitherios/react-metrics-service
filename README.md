@@ -7,7 +7,55 @@ React adapter for metrics services like Google Analytics, Tealium or Comcast.
 
 ## Usage
 
-WIP
+**WIP**
+
+First create your metrics-service module (eg. using google analytics) in the file `my-metrics.js`:
+
+```js
+// my-metrics.js
+
+import { createClient, googleAnalytics } from 'react-metrics-service'
+
+const client = createClient()
+client.addMiddleware(googleAnalytics({ trackingID: 'UA-000000-01' }))
+
+export default client
+```
+
+Add `MetricsServiceContext` high order component to your app root component:
+
+```js
+import { MetricsServiceContext } from 'react-metrics-service'
+import myClient from 'my-metrics'
+
+const App = (
+  // ... your app here
+)
+
+export default MetricsServiceContext({ client: myClient })(App)
+```
+
+Then you can use one of the helper high order components like:
+
+```js
+import { MetricsServiceClick } from 'react-metrics-service'
+import MyComponent from 'my-component.js'
+
+export default MetricsServiceClick({ call: 'gaSend', arguments: ['event', 'Video', 'play'] })(MyComponent)
+```
+
+Or use the service directly like:
+
+```js
+import myClient from 'my-metrics'
+
+export default () => {
+  // ...
+  myClient.gaSend('event', 'Video', 'play')
+  // ...
+}
+```
+
 
 ## Contributing
 
