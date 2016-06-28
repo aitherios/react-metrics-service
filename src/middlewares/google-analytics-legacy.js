@@ -23,6 +23,9 @@ const googleAnalyticsLegacy = ({
   gaPush: (...args) => {
     window._gaq.push(...args)
   },
+  gaPageView: () => {
+    window._gaq.push(['_trackPageview'])
+  },
 })
 
 export { googleAnalyticsLegacy }

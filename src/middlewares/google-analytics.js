@@ -21,6 +21,9 @@ const googleAnalytics = ({
   gaSend: (...args) => {
     window.ga('send', ...args)
   },
+  gaPageView: () => {
+    window.ga('send', 'pageview')
+  },
 })
 
 export { googleAnalytics }
