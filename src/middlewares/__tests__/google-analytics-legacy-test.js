@@ -7,7 +7,7 @@ describe('googleAnalyticsLegacy middleware', () => {
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = googleAnalyticsLegacy({ trackingId: 'test' })
+      subject = googleAnalyticsLegacy({ trackingID: 'test' })
     })
     it('returns an object', () => {
       expect(subject).toBeTruthy()

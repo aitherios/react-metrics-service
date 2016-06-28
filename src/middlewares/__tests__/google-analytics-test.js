@@ -7,7 +7,7 @@ describe('googleAnalytics middleware', () => {
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = googleAnalytics({ trackingId: 'test' })
+      subject = googleAnalytics({ trackingID: 'test' })
     })
     it('returns an object', () => {
       expect(subject).toBeTruthy()

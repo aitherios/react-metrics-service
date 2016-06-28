@@ -1,5 +1,5 @@
 const googleAnalyticsLegacy = ({
-  trackingId,
+  trackingID,
 }) => ({
   componentDidMount: () => {
     if (document) {
@@ -8,7 +8,7 @@ const googleAnalyticsLegacy = ({
       elem.innerHTML =
       `
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '${trackingId}']);
+        _gaq.push(['_setAccount', '${trackingID}']);
         _gaq.push(['_trackPageview']);
 
         (function() {

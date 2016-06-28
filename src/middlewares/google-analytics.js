@@ -1,5 +1,5 @@
 const googleAnalytics = ({
-  trackingId,
+  trackingID,
 }) => ({
   componentDidMount: () => {
     if (document) {
@@ -12,7 +12,7 @@ const googleAnalytics = ({
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '${trackingId}', 'auto');
+        ga('create', '${trackingID}', 'auto');
         ga('send', 'pageview');
       `
       document.head.appendChild(elem)
