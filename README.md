@@ -38,10 +38,10 @@ export default metricsServiceContext({ client: myClient })(App)
 Then you can use one of the helper high order components like:
 
 ```js
-import { MetricsServiceClick } from 'react-metrics-service'
+import { metricsServiceClick } from 'react-metrics-service'
 import MyComponent from 'my-component.js'
 
-export default MetricsServiceClick({ call: 'gaSend', arguments: ['event', 'Video', 'play'] })(MyComponent)
+export default metricsServiceClick({ gaSend: ['event', 'Video', 'play'] })(MyComponent)
 ```
 
 Or use the service directly like:
