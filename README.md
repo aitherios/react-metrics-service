@@ -56,6 +56,11 @@ export default () => {
 }
 ```
 
+## TODO
+
+* Event pool that can wait for middlewares to boot
+* Render hook support on middlewares
+* Standardize a isReady call on middlewares
 
 ## Contributing
 
