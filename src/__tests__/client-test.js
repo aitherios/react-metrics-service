@@ -1,4 +1,4 @@
-jest.unmock('../metrics-service')
+jest.unmock('../client')
 
 import { createClient } from '../client'
 
