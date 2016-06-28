@@ -13,14 +13,21 @@ describe('client', () => {
   describe('addMiddleware', () => {
     beforeEach(() => { subject = createClient() })
     it('adds a middleware', () => {
-      const aMiddleware = () => ({})
+      const aMiddleware = {}
       subject.addMiddleware(aMiddleware)
       expect(subject.middlewares).toContain(aMiddleware)
+    })
+    it('injects react life cycle methods into middleware', () => {
+      const aMiddleware = {}
+      subject.addMiddleware(aMiddleware)
+      expect(aMiddleware.componentWillMount).toBeTruthy()
+      expect(aMiddleware.componentDidMount).toBeTruthy()
+      expect(aMiddleware.componentWillUnmount).toBeTruthy()
     })
   })
 
   describe('removeMiddleware', () => {
-    const aMiddleware = () => ({})
+    const aMiddleware = {}
 
     beforeEach(() => {
       subject = createClient({ middlewares: [aMiddleware, { other: true }] })

@@ -13,6 +13,15 @@ class Client {
     if (!newMiddleware._middlewareId) {
       newMiddleware._middlewareId = ++idCounter // eslint-disable-line
     }
+    if (!newMiddleware.componentWillMount) {
+      newMiddleware.componentWillMount = () => {} // eslint-disable-line
+    }
+    if (!newMiddleware.componentDidMount) {
+      newMiddleware.componentDidMount = () => {} // eslint-disable-line
+    }
+    if (!newMiddleware.componentWillUnmount) {
+      newMiddleware.componentWillUnmount = () => {} // eslint-disable-line
+    }
     this._middlewares.push(newMiddleware)
     return this
   }
