@@ -7,7 +7,7 @@ import metricsServiceClick from '../metrics-service-click'
 
 describe('metricsServiceClick()(Component)', () => {
   let subject
-  const client = { event: jest.fn() }
+  const client = { callMiddlewares: jest.fn() }
   const Header = ({ title }) => (<h1>{title}</h1>) // eslint-disable-line
 
   describe('with ("event", "arg1")(Component)', () => {
@@ -22,9 +22,10 @@ describe('metricsServiceClick()(Component)', () => {
 
     it('calls client event on click', () => {
       subject.simulate('click')
-      expect(client.event.mock.calls.length).toBe(1)
-      expect(client.event.mock.calls[0][0]).toBe('arg1')
-      expect(client.event.mock.calls[0][1]).toBe('arg2')
+      expect(client.callMiddlewares.mock.calls.length).toBe(1)
+      expect(client.callMiddlewares.mock.calls[0][0]).toBe('event')
+      expect(client.callMiddlewares.mock.calls[0][1]).toBe('arg1')
+      expect(client.callMiddlewares.mock.calls[0][2]).toBe('arg2')
     })
   })
 })
