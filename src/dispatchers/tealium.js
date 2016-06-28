@@ -5,6 +5,7 @@ const tealium = ({
   profile,
   env,
   utag_data = {},
+  url,
 }) => ({
   componentDidMount: () => {
     if (document) {
@@ -22,12 +23,13 @@ const tealium = ({
       `
       document.head.appendChild(elem)
 
+      const utagjs = url || `//tags.tiqcdn.com/utag/${account}/${profile}/${env}/utag.js`
       elem = document.createElement('script')
       elem.type = 'text/javascript'
       elem.innerHTML =
       `
         (function(a,b,c,d){
-        a='//tags.tiqcdn.com/utag/${account}/${profile}/${env}/utag.js';
+        a='${utagjs}';
         b=document;c='script';d=b.createElement(c);d.src=a;
         d.type='text/java’+c;d.async=true;
         a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)
