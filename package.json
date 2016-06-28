@@ -1,6 +1,6 @@
 {
   "name": "react-metrics-service",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React adapter for metrics services like Google Analytics, Tealium or Comcast.",
   "main": "dist/index.js",
   "scripts": {
