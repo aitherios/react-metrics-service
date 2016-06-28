@@ -39,9 +39,12 @@ class Client {
 
     this.middlewares.forEach((middleware) => {
       const func = middleware[methodName]
+
       if (!!(func && func.constructor && func.call && func.apply)) {
         responses.push(func(...args))
         calledOnce = true
+      } else if (!!(middleware.prototype && middleware.prototype instanceof Proxy)) {
+        func(...args)
       }
     })
 
