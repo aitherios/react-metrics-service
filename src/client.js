@@ -56,4 +56,4 @@ const createClient = (...props) => new Proxy(
   new Client(...props), handler
 )
 
-export { createClient }
+export { createClient, Client }

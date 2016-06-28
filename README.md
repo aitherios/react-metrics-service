@@ -22,17 +22,17 @@ client.addMiddleware(googleAnalytics({ trackingID: 'UA-000000-01' }))
 export default client
 ```
 
-Add `MetricsServiceContext` high order component to your app root component:
+Add `metricsServiceContext` high order component to your app root component:
 
 ```js
-import { MetricsServiceContext } from 'react-metrics-service'
+import { metricsServiceContext } from 'react-metrics-service'
 import myClient from 'my-metrics'
 
 const App = (
   // ... your app here
 )
 
-export default MetricsServiceContext({ client: myClient })(App)
+export default metricsServiceContext({ client: myClient })(App)
 ```
 
 Then you can use one of the helper high order components like:

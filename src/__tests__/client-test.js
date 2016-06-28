@@ -66,7 +66,7 @@ describe('client', () => {
     })
   })
 
-  describe('traps other method calls to callMiddlewares', () => {
+  describe('other method calls traps to callMiddlewares', () => {
     let aMiddlewareFunction
     let aMiddleware
 
@@ -76,7 +76,7 @@ describe('client', () => {
       subject = createClient({ middlewares: [aMiddleware] })
     })
 
-    fit('method name is trapped as event name', () => {
+    it('method name is trapped as event name', () => {
       subject.event('a', 'b')
       expect(aMiddlewareFunction.mock.calls.length).toBe(1)
       expect(aMiddlewareFunction.mock.calls[0][0]).toBe('a')
