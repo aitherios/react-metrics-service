@@ -3,9 +3,9 @@ jest.unmock('../metrics-service-context')
 import React from 'react'
 import { mount } from 'enzyme'
 
-import metricsServiceContext from '../metrics-service-context'
+import { withMetricsServiceContext } from '../metrics-service-context'
 
-describe('metricsServiceContext()', () => {
+describe('mithMetricsServiceContext()', () => {
   let subject
   let client
   let Header
@@ -17,7 +17,7 @@ describe('metricsServiceContext()', () => {
         callMiddlewares: jest.fn(),
       }
       Header = ({ header }) => (<h1>{ header }</h1>) // eslint-disable-line
-      Enhanced = metricsServiceContext({ client })(Header)
+      Enhanced = withMetricsServiceContext({ client })(Header)
       subject = mount(<Enhanced />)
     })
 
@@ -46,7 +46,7 @@ describe('metricsServiceContext()', () => {
         callMiddlewares: jest.fn(),
       }
       Header = ({ header }) => (<h1>{ header }</h1>) // eslint-disable-line
-      Enhanced = metricsServiceContext({ client })(Header)
+      Enhanced = withMetricsServiceContext({ client })(Header)
       subject = mount(<Enhanced />)
     })
 

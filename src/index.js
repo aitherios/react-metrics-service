@@ -1,4 +1,10 @@
 import { createClient } from './client'
-import metricsServiceContext from './metrics-service-context'
+import { withMetricsServiceContext, MetricsServiceContext } from './metrics-service-context'
+import debugLog from './middlewares/debug-log'
 
-export { createClient, metricsServiceContext }
+export {
+  createClient,
+  MetricsServiceContext,
+  withMetricsServiceContext,
+  debugLog,
+}

@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
-import wrapDisplayName from 'recompose/wrapDisplayName'
 
-const metricsServiceContext = ({
-  client,
-} = {}) => (BaseComponent) => class extends Component {
-  static displayName = wrapDisplayName(BaseComponent, 'metricsServiceContext')
+class MetricsServiceContext extends Component {
+  static propTypes = {
+    client: PropTypes.object.isRequired,
+    children: PropTypes.node,
+  }
 
   static childContextTypes = {
     metricsServiceClient: PropTypes.object,
@@ -12,27 +12,35 @@ const metricsServiceContext = ({
 
   getChildContext() {
     return {
-      metricsServiceClient: client,
+      metricsServiceClient: this.props.client,
     }
   }
 
   componentWillMount(...args) {
-    client.callMiddlewares('componentWillMount', ...args)
+    this.props.client.callMiddlewares('componentWillMount', ...args)
   }
 
   componentDidMount(...args) {
-    client.callMiddlewares('componentDidMount', ...args)
+    this.props.client.callMiddlewares('componentDidMount', ...args)
   }
 
   componentWillUnmount(...args) {
-    client.callMiddlewares('componentWillUnmount', ...args)
+    this.props.client.callMiddlewares('componentWillUnmount', ...args)
   }
 
   render() {
     return (
-      <BaseComponent {...this.props} />
+      <div>{this.props.children}</div>
     )
   }
 }
 
-export default metricsServiceContext
+const withMetricsServiceContext = ({
+  client,
+} = {}) => (BaseComponent) => ({ ...props }) => (
+  <MetricsServiceContext client={client}>
+    <BaseComponent {...props} />
+  </MetricsServiceContext>
+)
+
+export { withMetricsServiceContext, MetricsServiceContext }
