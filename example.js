@@ -1,6 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { createClient, debugLog, withMetricsServiceContext, withMetricsServiceClient } from './src'
+import {
+  createClient,
+  debugLog,
+  withMetricsServiceContext,
+  withMetricsServiceClient,
+  metricsServiceClick,
+} from './src'
 
 /* eslint-disable react/prefer-stateless-function, react/no-multi-comp */
 
@@ -25,11 +31,30 @@ class MyComponent extends React.Component {
 
 const EnhancedMyComponent = withMetricsServiceClient()(MyComponent)
 
+class OtherComponent extends React.Component {
+  static propTypes = {
+    metricsServiceClient: React.PropTypes.object,
+  }
+
+  render() {
+    return (
+      <div
+        style={{ backgroundColor: 'LightBlue' }}
+      >
+        {'OtherComponent'}
+      </div>
+    )
+  }
+}
+
+const EnhancedOtherComponent = metricsServiceClick('click', 'other-event')(OtherComponent)
+
 class App extends React.Component {
   render() {
     return (
       <div>
         <EnhancedMyComponent />
+        <EnhancedOtherComponent />
       </div>
     )
   }
