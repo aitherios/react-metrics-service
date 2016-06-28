@@ -1,18 +1,13 @@
-jest.unmock('../tealium')
+jest.unmock('../google-analytics')
 
-import tealium from '../tealium'
+import googleAnalytics from '../google-analytics'
 
-describe('tealium middleware', () => {
+describe('googleAnalytics dispatcher', () => {
   let subject
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = tealium({
-        account: 'test',
-        profile: 'first',
-        env: 'prod',
-        utag_data: { is: 'bloody', but: 'unbound' },
-      })
+      subject = googleAnalytics({ trackingID: 'test' })
     })
     it('returns an object', () => {
       expect(subject).toBeTruthy()
@@ -22,7 +17,7 @@ describe('tealium middleware', () => {
       expect(document.head.innerHTML).toBeFalsy()
       subject.componentDidMount()
       expect(document.head.innerHTML).toBeTruthy()
-      expect(document.head.innerHTML).toContain('/utag.js')
+      expect(document.head.innerHTML).toContain('https://www.google-analytics.com/analytics.js')
     })
   })
 })

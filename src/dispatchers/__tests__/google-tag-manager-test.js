@@ -1,13 +1,16 @@
-jest.unmock('../google-analytics-legacy')
+jest.unmock('../google-tag-manager')
 
-import googleAnalyticsLegacy from '../google-analytics-legacy'
+import googleTagManager from '../google-tag-manager'
 
-describe('googleAnalyticsLegacy middleware', () => {
+describe('googleTagManager dispatcher', () => {
   let subject
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = googleAnalyticsLegacy({ trackingID: 'test' })
+      subject = googleTagManager({
+        containerID: 'GTM-XXXX',
+        dataLayer: { quoth: 'the', raven: 'nevermore' },
+      })
     })
     it('returns an object', () => {
       expect(subject).toBeTruthy()
@@ -17,7 +20,7 @@ describe('googleAnalyticsLegacy middleware', () => {
       expect(document.head.innerHTML).toBeFalsy()
       subject.componentDidMount()
       expect(document.head.innerHTML).toBeTruthy()
-      expect(document.head.innerHTML).toContain('google-analytics.com/ga.js')
+      expect(document.head.innerHTML).toContain('//www.googletagmanager.com/ns.html?id=')
     })
   })
 })

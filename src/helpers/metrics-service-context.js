@@ -17,15 +17,15 @@ class MetricsServiceContext extends Component {
   }
 
   componentWillMount(...args) {
-    this.props.client.callMiddlewares('componentWillMount', ...args)
+    this.props.client.callDispatchers('componentWillMount', ...args)
   }
 
   componentDidMount(...args) {
-    this.props.client.callMiddlewares('componentDidMount', ...args)
+    this.props.client.callDispatchers('componentDidMount', ...args)
   }
 
   componentWillUnmount(...args) {
-    this.props.client.callMiddlewares('componentWillUnmount', ...args)
+    this.props.client.callDispatchers('componentWillUnmount', ...args)
   }
 
   render() {

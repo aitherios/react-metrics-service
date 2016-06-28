@@ -1,13 +1,13 @@
-jest.unmock('../google-analytics')
+jest.unmock('../google-analytics-legacy')
 
-import googleAnalytics from '../google-analytics'
+import googleAnalyticsLegacy from '../google-analytics-legacy'
 
-describe('googleAnalytics middleware', () => {
+describe('googleAnalyticsLegacy dispatcher', () => {
   let subject
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = googleAnalytics({ trackingID: 'test' })
+      subject = googleAnalyticsLegacy({ trackingID: 'test' })
     })
     it('returns an object', () => {
       expect(subject).toBeTruthy()
@@ -17,7 +17,7 @@ describe('googleAnalytics middleware', () => {
       expect(document.head.innerHTML).toBeFalsy()
       subject.componentDidMount()
       expect(document.head.innerHTML).toBeTruthy()
-      expect(document.head.innerHTML).toContain('https://www.google-analytics.com/analytics.js')
+      expect(document.head.innerHTML).toContain('google-analytics.com/ga.js')
     })
   })
 })

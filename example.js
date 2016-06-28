@@ -7,12 +7,12 @@ import {
   withMetricsServiceClient,
   metricsServiceClick,
 } from './src'
-import googleAnalytics from './src/middlewares/google-analytics'
+import googleAnalytics from './src/dispatchers/google-analytics'
 
 /* eslint-disable react/prefer-stateless-function, react/no-multi-comp */
 
 const client = createClient({
-  middlewares: [debugLog, googleAnalytics({ trackingId: 'UA-000000-01' })],
+  dispatchers: [debugLog, googleAnalytics({ trackingId: 'UA-000000-01' })],
 })
 
 class MyComponent extends React.Component {

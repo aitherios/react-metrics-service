@@ -11,7 +11,7 @@ const metricsServiceClick = (
   }
 
   handleClick() {
-    this.context.metricsServiceClient.callMiddlewares(methodName, ...methodArgs)
+    this.context.metricsServiceClient.callDispatchers(methodName, ...methodArgs)
   }
 
   render() {

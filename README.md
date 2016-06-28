@@ -17,7 +17,7 @@ First create your metrics-service module (eg. using google analytics) in the fil
 import { createClient, googleAnalytics } from 'react-metrics-service'
 
 const client = createClient()
-client.addMiddleware(googleAnalytics({ trackingID: 'UA-000000-01' }))
+client.addDispatcher(googleAnalytics({ trackingID: 'UA-000000-01' }))
 
 export default client
 ```
@@ -58,9 +58,9 @@ export default () => {
 
 ## TODO
 
-* Event pool that can wait for middlewares to boot
-* Render hook support on middlewares
-* Standardize a isReady call on middlewares
+* Event pool that can wait for dispatchers to boot
+* Render hook support on dispatchers
+* Standardize a isReady call on dispatchers
 
 ## Contributing
 

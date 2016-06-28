@@ -1,15 +1,17 @@
-jest.unmock('../google-tag-manager')
+jest.unmock('../tealium')
 
-import googleTagManager from '../google-tag-manager'
+import tealium from '../tealium'
 
-describe('googleTagManager middleware', () => {
+describe('tealium dispatcher', () => {
   let subject
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      subject = googleTagManager({
-        containerID: 'GTM-XXXX',
-        dataLayer: { quoth: 'the', raven: 'nevermore' },
+      subject = tealium({
+        account: 'test',
+        profile: 'first',
+        env: 'prod',
+        utag_data: { is: 'bloody', but: 'unbound' },
       })
     })
     it('returns an object', () => {
@@ -20,7 +22,7 @@ describe('googleTagManager middleware', () => {
       expect(document.head.innerHTML).toBeFalsy()
       subject.componentDidMount()
       expect(document.head.innerHTML).toBeTruthy()
-      expect(document.head.innerHTML).toContain('//www.googletagmanager.com/ns.html?id=')
+      expect(document.head.innerHTML).toContain('/utag.js')
     })
   })
 })

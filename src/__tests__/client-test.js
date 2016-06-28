@@ -10,88 +10,88 @@ describe('client', () => {
     it('exists', () => { expect(subject).toBeTruthy() })
   })
 
-  describe('addMiddleware', () => {
+  describe('addDispatcher', () => {
     beforeEach(() => { subject = createClient() })
-    it('adds a middleware', () => {
-      const aMiddleware = {}
-      subject.addMiddleware(aMiddleware)
-      expect(subject.middlewares).toContain(aMiddleware)
+    it('adds a dispatcher', () => {
+      const aDispatcher = {}
+      subject.addDispatcher(aDispatcher)
+      expect(subject.dispatchers).toContain(aDispatcher)
     })
-    it('injects react life cycle methods into middleware', () => {
-      const aMiddleware = {}
-      subject.addMiddleware(aMiddleware)
-      expect(aMiddleware.componentWillMount).toBeTruthy()
-      expect(aMiddleware.componentDidMount).toBeTruthy()
-      expect(aMiddleware.componentWillUnmount).toBeTruthy()
-    })
-  })
-
-  describe('removeMiddleware', () => {
-    const aMiddleware = {}
-
-    beforeEach(() => {
-      subject = createClient({ middlewares: [aMiddleware, { other: true }] })
-    })
-
-    it('removes its middleware', () => {
-      expect(subject.middlewares).toContain(aMiddleware)
-      subject.removeMiddleware(aMiddleware)
-      expect(subject.middlewares).not.toContain(aMiddleware)
+    it('injects react life cycle methods into dispatcher', () => {
+      const aDispatcher = {}
+      subject.addDispatcher(aDispatcher)
+      expect(aDispatcher.componentWillMount).toBeTruthy()
+      expect(aDispatcher.componentDidMount).toBeTruthy()
+      expect(aDispatcher.componentWillUnmount).toBeTruthy()
     })
   })
 
-  describe('callMiddlewares', () => {
-    let aMiddlewareFunction
-    let otherMiddlewareFunction
-    let aMiddleware
-    let otherMiddleware
+  describe('removeDispatcher', () => {
+    const aDispatcher = {}
 
     beforeEach(() => {
-      aMiddlewareFunction = jest.fn((i) => (i))
-      otherMiddlewareFunction = jest.fn((i) => (i))
-      aMiddleware = { event: aMiddlewareFunction }
-      otherMiddleware = { event: otherMiddlewareFunction }
-      subject = createClient({ middlewares: [aMiddleware, otherMiddleware] })
+      subject = createClient({ dispatchers: [aDispatcher, { other: true }] })
     })
 
-    it('calls both middlewares that respond to event', () => {
-      subject.callMiddlewares('event')
-      expect(aMiddlewareFunction.mock.calls.length).toBe(1)
-      expect(otherMiddlewareFunction.mock.calls.length).toBe(1)
+    it('removes its dispatcher', () => {
+      expect(subject.dispatchers).toContain(aDispatcher)
+      subject.removeDispatcher(aDispatcher)
+      expect(subject.dispatchers).not.toContain(aDispatcher)
+    })
+  })
+
+  describe('callDispatchers', () => {
+    let aDispatcherFunction
+    let otherDispatcherFunction
+    let aDispatcher
+    let otherDispatcher
+
+    beforeEach(() => {
+      aDispatcherFunction = jest.fn((i) => (i))
+      otherDispatcherFunction = jest.fn((i) => (i))
+      aDispatcher = { event: aDispatcherFunction }
+      otherDispatcher = { event: otherDispatcherFunction }
+      subject = createClient({ dispatchers: [aDispatcher, otherDispatcher] })
     })
 
-    it('calls middleware with arguments "a", "b"', () => {
-      subject.callMiddlewares('event', 'a', 'b')
-      expect(aMiddlewareFunction.mock.calls[0][0]).toBe('a')
-      expect(aMiddlewareFunction.mock.calls[0][1]).toBe('b')
+    it('calls both dispatchers that respond to event', () => {
+      subject.callDispatchers('event')
+      expect(aDispatcherFunction.mock.calls.length).toBe(1)
+      expect(otherDispatcherFunction.mock.calls.length).toBe(1)
     })
 
-    it('warns when no middleware can respond to event', () => {
+    it('calls dispatcher with arguments "a", "b"', () => {
+      subject.callDispatchers('event', 'a', 'b')
+      expect(aDispatcherFunction.mock.calls[0][0]).toBe('a')
+      expect(aDispatcherFunction.mock.calls[0][1]).toBe('b')
+    })
+
+    it('warns when no dispatcher can respond to event', () => {
       console.warn = jest.fn()
-      subject.callMiddlewares('noEvent')
+      subject.callDispatchers('noEvent')
       expect(console.warn.mock.calls.length).toBe(1)
     })
 
-    it('returns middlewares responses', () => {
-      expect(subject.callMiddlewares('event', 1)).toEqual([1, 1])
+    it('returns dispatchers responses', () => {
+      expect(subject.callDispatchers('event', 1)).toEqual([1, 1])
     })
   })
 
-  describe('other method calls traps to callMiddlewares', () => {
-    let aMiddlewareFunction
-    let aMiddleware
+  describe('other method calls traps to callDispatchers', () => {
+    let aDispatcherFunction
+    let aDispatcher
 
     beforeEach(() => {
-      aMiddlewareFunction = jest.fn()
-      aMiddleware = { event: aMiddlewareFunction }
-      subject = createClient({ middlewares: [aMiddleware] })
+      aDispatcherFunction = jest.fn()
+      aDispatcher = { event: aDispatcherFunction }
+      subject = createClient({ dispatchers: [aDispatcher] })
     })
 
     it('method name is trapped as event name', () => {
       subject.event('a', 'b')
-      expect(aMiddlewareFunction.mock.calls.length).toBe(1)
-      expect(aMiddlewareFunction.mock.calls[0][0]).toBe('a')
-      expect(aMiddlewareFunction.mock.calls[0][1]).toBe('b')
+      expect(aDispatcherFunction.mock.calls.length).toBe(1)
+      expect(aDispatcherFunction.mock.calls[0][0]).toBe('a')
+      expect(aDispatcherFunction.mock.calls[0][1]).toBe('b')
     })
   })
 })
