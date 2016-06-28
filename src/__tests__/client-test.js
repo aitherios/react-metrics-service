@@ -47,8 +47,8 @@ describe('client', () => {
     let otherMiddleware
 
     beforeEach(() => {
-      aMiddlewareFunction = jest.fn()
-      otherMiddlewareFunction = jest.fn()
+      aMiddlewareFunction = jest.fn((i) => (i))
+      otherMiddlewareFunction = jest.fn((i) => (i))
       aMiddleware = { event: aMiddlewareFunction }
       otherMiddleware = { event: otherMiddlewareFunction }
       subject = createClient({ middlewares: [aMiddleware, otherMiddleware] })
@@ -70,6 +70,10 @@ describe('client', () => {
       console.warn = jest.fn()
       subject.callMiddlewares('noEvent')
       expect(console.warn.mock.calls.length).toBe(1)
+    })
+
+    it('returns middlewares responses', () => {
+      expect(subject.callMiddlewares('event', 1)).toEqual([1, 1])
     })
   })
 

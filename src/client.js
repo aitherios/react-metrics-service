@@ -35,11 +35,12 @@ class Client {
 
   callMiddlewares(methodName, ...args) {
     let calledOnce = false
+    const responses = []
 
     this.middlewares.forEach((middleware) => {
       const func = middleware[methodName]
       if (!!(func && func.constructor && func.call && func.apply)) {
-        func(...args)
+        responses.push(func(...args))
         calledOnce = true
       }
     })
@@ -48,7 +49,7 @@ class Client {
       console.warn(`react-metrics-service: no middleware respond to ${methodName}`)
     }
 
-    return this
+    return responses
   }
 }
 
