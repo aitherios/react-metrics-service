@@ -17,15 +17,15 @@ const metricsServiceContext = ({
   }
 
   componentWillMount(...args) {
-    client.componentWillMount(...args)
+    client.callMiddlewares('componentWillMount', ...args)
   }
 
   componentDidMount(...args) {
-    client.componentDidMount(...args)
+    client.callMiddlewares('componentDidMount', ...args)
   }
 
   componentWillUnmount(...args) {
-    client.componentWillUnmount(...args)
+    client.callMiddlewares('componentWillUnmount', ...args)
   }
 
   render() {

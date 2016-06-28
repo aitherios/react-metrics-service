@@ -14,9 +14,7 @@ describe('metricsServiceContext()', () => {
   describe('hooks into some react live cycle methods', () => {
     beforeEach(() => {
       client = {
-        componentDidMount: jest.fn(),
-        componentWillMount: jest.fn(),
-        componentWillUnmount: jest.fn(),
+        callMiddlewares: jest.fn(),
       }
       Header = ({ header }) => (<h1>{ header }</h1>) // eslint-disable-line
       Enhanced = metricsServiceContext({ client })(Header)
@@ -25,26 +23,27 @@ describe('metricsServiceContext()', () => {
 
     it('renders', () => { expect(subject).toBeTruthy() })
 
-    it('calls client componentDidMount', () => {
-      expect(client.componentDidMount.mock.calls.length).toBe(1)
+    it('calls client componentWillMount', () => {
+      expect(client.callMiddlewares.mock.calls.length).toBe(2)
+      expect(client.callMiddlewares.mock.calls[0][0]).toBe('componentWillMount')
     })
 
-    it('calls client componentWillMount', () => {
-      expect(client.componentWillMount.mock.calls.length).toBe(1)
+    it('calls client componentDidMount', () => {
+      expect(client.callMiddlewares.mock.calls.length).toBe(2)
+      expect(client.callMiddlewares.mock.calls[1][0]).toBe('componentDidMount')
     })
 
     it('calls client componentWillUnmount', () => {
       subject.unmount()
-      expect(client.componentWillUnmount.mock.calls.length).toBe(1)
+      expect(client.callMiddlewares.mock.calls.length).toBe(3)
+      expect(client.callMiddlewares.mock.calls[2][0]).toBe('componentWillUnmount')
     })
   })
 
   describe('injects the client in the context', () => {
     beforeEach(() => {
       client = {
-        componentDidMount: jest.fn(),
-        componentWillMount: jest.fn(),
-        componentWillUnmount: jest.fn(),
+        callMiddlewares: jest.fn(),
       }
       Header = ({ header }) => (<h1>{ header }</h1>) // eslint-disable-line
       Enhanced = metricsServiceContext({ client })(Header)
