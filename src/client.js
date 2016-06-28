@@ -1,9 +1,3 @@
-const handler = {
-  get(target, name) {
-    return target[name]
-  },
-}
-
 let idCounter = 27000
 
 class Client {
@@ -29,8 +23,37 @@ class Client {
     )
     return this
   }
+
+  callMiddlewares(methodName, ...args) {
+    let calledOnce = false
+
+    this.middlewares.forEach((middleware) => {
+      const func = middleware[methodName]
+      if (!!(func && func.constructor && func.call && func.apply)) {
+        func(...args)
+        calledOnce = true
+      }
+    })
+
+    if (!calledOnce) {
+      console.warn(`react-metrics-service: no middleware respond to ${methodName}`)
+    }
+
+    return this
+  }
 }
 
-const createClient = () => new Proxy(new Client(), handler)
+const handler = {
+  get(target, name) {
+    if (target[name]) {
+      return target[name]
+    }
+    return (...args) => target.callMiddlewares(name, ...args)
+  },
+}
+
+const createClient = (...props) => new Proxy(
+  new Client(...props), handler
+)
 
 export { createClient }
