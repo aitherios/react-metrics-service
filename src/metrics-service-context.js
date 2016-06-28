@@ -1,10 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import wrapDisplayName from 'recompose/wrapDisplayName'
 
 const metricsServiceContext = ({
   client,
 } = {}) => (BaseComponent) => class extends Component {
   static displayName = wrapDisplayName(BaseComponent, 'metricsServiceContext')
+
+  static childContextTypes = {
+    metricsServiceClient: PropTypes.object,
+  }
+
+  getChildContext() {
+    return {
+      metricsServiceClient: client,
+    }
+  }
 
   componentWillMount(...args) {
     client.componentWillMount(...args)

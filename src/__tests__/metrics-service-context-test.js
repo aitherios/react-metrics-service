@@ -38,4 +38,21 @@ describe('metricsServiceContext()', () => {
       expect(client.componentWillUnmount.mock.calls.length).toBe(1)
     })
   })
+
+  describe('injects the client in the context', () => {
+    beforeEach(() => {
+      client = {
+        componentDidMount: jest.fn(),
+        componentWillMount: jest.fn(),
+        componentWillUnmount: jest.fn(),
+      }
+      Header = ({ header }) => (<h1>{ header }</h1>) // eslint-disable-line
+      Enhanced = metricsServiceContext({ client })(Header)
+      subject = mount(<Enhanced />)
+    })
+
+    it('injects context', () => {
+      expect(subject.context()).not.toBeUndefined()
+    })
+  })
 })
