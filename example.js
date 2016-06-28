@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { createClient, debugLog, withMetricsServiceContext } from './src'
+import { createClient, debugLog, withMetricsServiceContext, withMetricsServiceClient } from './src'
 
 /* eslint-disable react/prefer-stateless-function, react/no-multi-comp */
 
 const client = createClient({ middlewares: [debugLog] })
 
 class MyComponent extends React.Component {
-  static contextTypes = {
+  static propTypes = {
     metricsServiceClient: React.PropTypes.object,
   }
 
@@ -15,7 +15,7 @@ class MyComponent extends React.Component {
     return (
       <div
         style={{ backgroundColor: 'LightGreen' }}
-        onClick={() => this.context.metricsServiceClient.click('here')}
+        onClick={() => this.props.metricsServiceClient.click('here')}
       >
         {'MyComponent'}
       </div>
@@ -23,21 +23,23 @@ class MyComponent extends React.Component {
   }
 }
 
+const EnhancedMyComponent = withMetricsServiceClient()(MyComponent)
+
 class App extends React.Component {
   render() {
     return (
       <div>
-        <MyComponent />
+        <EnhancedMyComponent />
       </div>
     )
   }
 }
 
-const Enhanced = withMetricsServiceContext({ client })(App)
+const EnhancedApp = withMetricsServiceContext({ client })(App)
 
 const div = document.createElement('div')
 document.body.appendChild(div)
 
 ReactDom.render((
-  <Enhanced />
+  <EnhancedApp />
 ), div)
