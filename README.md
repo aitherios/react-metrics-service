@@ -41,7 +41,7 @@ Then you can use one of the helper high order components like:
 import { metricsServiceClick } from 'react-metrics-service'
 import MyComponent from 'my-component.js'
 
-export default metricsServiceClick({ gaSend: ['event', 'Video', 'play'] })(MyComponent)
+export default metricsServiceClick('gaSend', ['event', 'Video', 'play'])(MyComponent)
 ```
 
 Or use the service directly like:
