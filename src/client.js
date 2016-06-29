@@ -65,8 +65,18 @@ const handler = {
   },
 }
 
-const createClient = (...props) => new Proxy(
-  new Client(...props), handler
-)
+const createClient = (...props) => {
+  let client
+
+  try {
+    client = new Proxy(new Client(...props), handler)
+  } catch (e) {
+    console.error("react-metrics-service: your javascript implementation doesn't support Proxy!" +
+                  " instead of using 'createClient()', use 'new Client()'")
+    client = new Client(...props)
+  }
+
+  return client
+}
 
 export { createClient, Client }
