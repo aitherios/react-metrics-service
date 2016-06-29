@@ -9,22 +9,10 @@ const tealium = ({
 }) => ({
   componentDidMount: () => {
     if (document) {
-      let elem = document.createElement('script')
-      elem.type = 'text/javascript'
-      elem.innerHTML =
-      `
-        var utag_data = {
-          ${
-            Object.keys(utag_data).map(
-              (k) => `"${k}": "${utag_data[k]}"`
-            ).join(",\n")
-          }
-        };
-      `
-      document.head.appendChild(elem)
+      window.utag_data = { ...utag_data }
 
       const utagjs = url || `//tags.tiqcdn.com/utag/${account}/${profile}/${env}/utag.js`
-      elem = document.createElement('script')
+      const elem = document.createElement('script')
       elem.type = 'text/javascript'
       elem.innerHTML =
       `

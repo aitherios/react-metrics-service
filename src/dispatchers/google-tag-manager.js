@@ -6,21 +6,9 @@ const googleTagManager = ({
 }) => ({
   componentDidMount: () => {
     if (document) {
-      let elem = document.createElement('script')
-      elem.type = 'text/javascript'
-      elem.innerHTML =
-      `
-        dataLayer = [{
-          ${
-            Object.keys(dataLayer).map(
-              (k) => `"${k}": "${dataLayer[k]}"`
-            ).join(",\n")
-          }
-        }];
-      `
-      document.head.appendChild(elem)
+      window.dataLayer = { ...dataLayer }
 
-      elem = document.createElement('noscript')
+      let elem = document.createElement('noscript')
       elem.innerHTML =
       `
         <iframe src="//www.googletagmanager.com/ns.html?id=${containerID}"
