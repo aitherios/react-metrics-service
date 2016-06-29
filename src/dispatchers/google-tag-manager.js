@@ -1,7 +1,7 @@
 /* eslint-disable quotes, camelcase */
 
 const googleTagManager = ({
-  containerID,
+  containerID = '',
   dataLayer = {},
 }) => ({
   componentDidMount: () => {

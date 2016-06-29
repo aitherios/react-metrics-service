@@ -1,9 +1,9 @@
 /* eslint-disable quotes, camelcase */
 
 const tealium = ({
-  account,
-  profile,
-  env,
+  account = '',
+  profile = '',
+  env = '',
   utag_data = {},
   url,
 }) => ({

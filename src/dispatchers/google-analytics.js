@@ -1,5 +1,5 @@
 const googleAnalytics = ({
-  trackingID,
+  trackingID = '',
 }) => ({
   componentDidMount: () => {
     if (document) {

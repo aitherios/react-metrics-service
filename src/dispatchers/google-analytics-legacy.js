@@ -1,5 +1,5 @@
 const googleAnalyticsLegacy = ({
-  trackingID,
+  trackingID = '',
 }) => ({
   componentDidMount: () => {
     if (document) {
@@ -20,7 +20,7 @@ const googleAnalyticsLegacy = ({
       document.head.appendChild(elem)
     }
   },
-  gaPush: (...args) => {
+  2: (...args) => {
     window._gaq.push(...args)
   },
   gaPageView: () => {
