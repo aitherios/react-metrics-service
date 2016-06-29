@@ -19,15 +19,14 @@ class Client {
 
   addDispatcher(newDispatcher) {
     function noop() {}
-    this._dispatchers.push({
-      ...{
-        _dispatcherId: ++idCounter,
-        componentWillMount: noop,
-        componentDidMount: noop,
-        componentWillUnmount: noop,
-      },
-      ...newDispatcher,
-    })
+    /* eslint-disable no-param-reassign */
+    if (!newDispatcher._dispatcherId) { newDispatcher._dispatcherId = ++idCounter }
+    if (!newDispatcher.componentWillMount) { newDispatcher.componentWillMount = noop }
+    if (!newDispatcher.componentDidMount) { newDispatcher.componentDidMount = noop }
+    if (!newDispatcher.componentWillUnmount) { newDispatcher.componentWillUnmount = noop }
+    /* eslint-enable no-param-reassign */
+
+    this._dispatchers.push(newDispatcher)
     return this
   }
 
@@ -44,12 +43,9 @@ class Client {
 
     this.dispatchers.forEach((dispatcher) => {
       const func = dispatcher[methodName]
-
       if (!!(func && func.constructor && func.call && func.apply)) {
         responses.push(func(...args))
         calledOnce = true
-      } else if (!!(dispatcher.prototype && dispatcher.prototype instanceof Proxy)) {
-        func(...args)
       }
     })
 
