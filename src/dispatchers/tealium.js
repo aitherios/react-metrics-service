@@ -19,7 +19,7 @@ const tealium = ({
         (function(a,b,c,d){
         a='${utagjs}';
         b=document;c='script';d=b.createElement(c);d.src=a;
-        d.type='text/java’+c;d.async=true;
+        d.type='text/java'+c;d.async=true;
         a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)
         })();
       `
