@@ -1,4 +1,4 @@
-import { createClient } from './client'
+import { createClient, Client } from './client'
 import { withMetricsServiceContext, MetricsServiceContext } from './helpers/metrics-service-context'
 import { withMetricsServiceClient } from './helpers/with-metrics-service-client'
 import { metricsServiceClick } from './helpers/metrics-service-click'
@@ -10,6 +10,7 @@ import tealium from './dispatchers/tealium'
 
 export {
   createClient,
+  Client,
   MetricsServiceContext,
   withMetricsServiceContext,
   withMetricsServiceClient,
