@@ -1,8 +1,16 @@
 let idCounter = 27000
 
 class Client {
-  constructor({ dispatchers } = {}) {
-    this._dispatchers = dispatchers || []
+  constructor({ dispatchers, dispatcher } = {}) {
+    this._dispatchers = []
+    if (dispatchers && dispatchers.forEach) {
+      dispatchers.forEach((d) => {
+        this.addDispatcher(d)
+      })
+    }
+    if (dispatcher && typeof dispatcher === 'object') {
+      this.addDispatcher(dispatcher)
+    }
   }
 
   get dispatchers() {
@@ -10,19 +18,16 @@ class Client {
   }
 
   addDispatcher(newDispatcher) {
-    if (!newDispatcher._dispatcherId) {
-      newDispatcher._dispatcherId = ++idCounter // eslint-disable-line
-    }
-    if (!newDispatcher.componentWillMount) {
-      newDispatcher.componentWillMount = () => {} // eslint-disable-line
-    }
-    if (!newDispatcher.componentDidMount) {
-      newDispatcher.componentDidMount = () => {} // eslint-disable-line
-    }
-    if (!newDispatcher.componentWillUnmount) {
-      newDispatcher.componentWillUnmount = () => {} // eslint-disable-line
-    }
-    this._dispatchers.push(newDispatcher)
+    function noop() {}
+    this._dispatchers.push({
+      ...{
+        _dispatcherId: ++idCounter,
+        componentWillMount: noop,
+        componentDidMount: noop,
+        componentWillUnmount: noop,
+      },
+      ...newDispatcher,
+    })
     return this
   }
 

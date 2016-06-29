@@ -6,37 +6,51 @@ describe('client', () => {
   let subject
 
   describe('createClient()', () => {
-    beforeEach(() => { subject = createClient() })
-    it('exists', () => { expect(subject).toBeTruthy() })
+    describe('without params', () => {
+      beforeEach(() => { subject = createClient() })
+      it('exists', () => { expect(subject).toBeTruthy() })
+    })
+
+    describe('with dispatchers array', () => {
+      beforeEach(() => { subject = createClient({ dispatchers: [{ a: 'a' }, { b: 'b' }] }) })
+      it('exists', () => { expect(subject).toBeTruthy() })
+    })
+
+    describe('with dispatcher object', () => {
+      beforeEach(() => { subject = createClient({ dispatcher: { a: 'a' } }) })
+      it('exists', () => { expect(subject).toBeTruthy() })
+    })
   })
 
   describe('addDispatcher', () => {
     beforeEach(() => { subject = createClient() })
     it('adds a dispatcher', () => {
-      const aDispatcher = {}
+      const aDispatcher = { _dispatcherId: 1 }
       subject.addDispatcher(aDispatcher)
-      expect(subject.dispatchers).toContain(aDispatcher)
+      expect(subject.dispatchers.map((d) => d._dispatcherId)).toContain(aDispatcher._dispatcherId)
     })
     it('injects react life cycle methods into dispatcher', () => {
       const aDispatcher = {}
       subject.addDispatcher(aDispatcher)
-      expect(aDispatcher.componentWillMount).toBeTruthy()
-      expect(aDispatcher.componentDidMount).toBeTruthy()
-      expect(aDispatcher.componentWillUnmount).toBeTruthy()
+      expect(subject.dispatchers[0].componentWillMount).toBeTruthy()
+      expect(subject.dispatchers[0].componentDidMount).toBeTruthy()
+      expect(subject.dispatchers[0].componentWillUnmount).toBeTruthy()
     })
   })
 
   describe('removeDispatcher', () => {
-    const aDispatcher = {}
+    const aDispatcher = { _dispatcherId: 1 }
 
     beforeEach(() => {
       subject = createClient({ dispatchers: [aDispatcher, { other: true }] })
     })
 
     it('removes its dispatcher', () => {
-      expect(subject.dispatchers).toContain(aDispatcher)
+      expect(subject.dispatchers.map((d) => d._dispatcherId)).toContain(aDispatcher._dispatcherId)
       subject.removeDispatcher(aDispatcher)
-      expect(subject.dispatchers).not.toContain(aDispatcher)
+      expect(
+        subject.dispatchers.map((d) => d._dispatcherId)
+      ).not.toContain(aDispatcher._dispatcherId)
     })
   })
 
