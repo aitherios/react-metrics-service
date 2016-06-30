@@ -44,7 +44,7 @@ class Client {
     this.dispatchers.forEach((dispatcher) => {
       const func = dispatcher[methodName]
       if (!!(func && func.constructor && func.call && func.apply)) {
-        responses.push(func(...args))
+        responses.push(func.apply(dispatcher, args))
         calledOnce = true
       }
     })
