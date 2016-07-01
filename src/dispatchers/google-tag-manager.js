@@ -29,6 +29,9 @@ const googleTagManager = ({
       document.head.appendChild(elem)
     }
   },
+  gtmPush: (...args) => {
+    window.dataLayer.push(...args)
+  },
 })
 
 export { googleTagManager }
