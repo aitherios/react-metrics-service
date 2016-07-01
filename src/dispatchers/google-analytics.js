@@ -13,7 +13,6 @@ const googleAnalytics = ({
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
         ga('create', '${trackingID}', 'auto');
-        ga('send', 'pageview');
       `
       document.head.appendChild(elem)
     }
@@ -21,8 +20,8 @@ const googleAnalytics = ({
   gaSend: (...args) => {
     window.ga('send', ...args)
   },
-  gaPageView: () => {
-    window.ga('send', 'pageview')
+  gaPageView: (...args) => {
+    window.ga('send', 'pageview', ...args)
   },
 })
 

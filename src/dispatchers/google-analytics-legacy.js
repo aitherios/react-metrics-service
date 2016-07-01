@@ -9,7 +9,6 @@ const googleAnalyticsLegacy = ({
       `
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '${trackingID}']);
-        _gaq.push(['_trackPageview']);
 
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -20,11 +19,11 @@ const googleAnalyticsLegacy = ({
       document.head.appendChild(elem)
     }
   },
-  2: (...args) => {
+  gaPush: (...args) => {
     window._gaq.push(...args)
   },
-  gaPageView: () => {
-    window._gaq.push(['_trackPageview'])
+  gaPageView: (...args) => {
+    window._gaq.push(['_trackPageview', ...args])
   },
 })
 
