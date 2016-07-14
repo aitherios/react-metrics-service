@@ -1,15 +1,18 @@
 const googleAnalyticsLegacy = ({
   trackingID = '',
 }) => ({
+  componentWillMount: () => {
+    if (typeof window !== 'undefined') {
+      window._gaq = window._gaq || []
+      window._gaq.push(['_setAccount', trackingID])
+    }
+  },
   componentDidMount: () => {
-    if (document) {
+    if (typeof document !== 'undefined') {
       const elem = document.createElement('script')
       elem.type = 'text/javascript'
       elem.innerHTML =
       `
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '${trackingID}']);
-
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -20,10 +23,14 @@ const googleAnalyticsLegacy = ({
     }
   },
   gaPush: (...args) => {
-    window._gaq.push(...args)
+    if (typeof window !== 'undefined') {
+      window._gaq.push(...args)
+    }
   },
   gaPageView: (...args) => {
-    window._gaq.push(['_trackPageview', ...args])
+    if (typeof window !== 'undefined') {
+      window._gaq.push(['_trackPageview', ...args])
+    }
   },
 })
 
