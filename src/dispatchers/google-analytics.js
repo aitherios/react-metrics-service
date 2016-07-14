@@ -1,8 +1,16 @@
 const googleAnalytics = ({
   trackingID = '',
 }) => ({
+  componentWillMount: () => {
+    if (typeof window !== 'undefined') {
+      window['ga'] = window['ga'] || function () {  //eslint-disable-line
+        (window['ga'].q = window['ga'].q || []).push(arguments) //eslint-disable-line
+      }
+      window.ga('create', trackingID, 'auto')
+    }
+  },
   componentDidMount: () => {
-    if (document) {
+    if (typeof document !== 'undefined') {
       const elem = document.createElement('script')
       elem.type = 'text/javascript'
       elem.innerHTML =
@@ -11,17 +19,19 @@ const googleAnalytics = ({
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '${trackingID}', 'auto');
       `
       document.head.appendChild(elem)
     }
   },
   gaSend: (...args) => {
-    window.ga('send', ...args)
+    if (typeof window !== 'undefined') {
+      window.ga('send', ...args)
+    }
   },
   gaPageView: (...args) => {
-    window.ga('send', 'pageview', ...args)
+    if (typeof window !== 'undefined') {
+      window.ga('send', 'pageview', ...args)
+    }
   },
 })
 
