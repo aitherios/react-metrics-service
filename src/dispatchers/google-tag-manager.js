@@ -4,10 +4,13 @@ const googleTagManager = ({
   containerID = '',
   dataLayer = {},
 }) => ({
-  componentDidMount: () => {
-    if (document) {
+  componentWillMount: () => {
+    if (typeof window !== 'undefined') {
       window.dataLayer = { ...dataLayer }
-
+    }
+  },
+  componentDidMount: () => {
+    if (typeof document !== 'undefined') {
       let elem = document.createElement('noscript')
       elem.innerHTML =
       `
@@ -30,7 +33,9 @@ const googleTagManager = ({
     }
   },
   gtmPush: (...args) => {
-    window.dataLayer.push(...args)
+    if (typeof window !== 'undefined') {
+      window.dataLayer.push(...args)
+    }
   },
 })
 
