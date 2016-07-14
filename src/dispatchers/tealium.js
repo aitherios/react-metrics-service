@@ -7,10 +7,13 @@ const tealium = ({
   utag_data = {},
   url,
 }) => ({
-  componentDidMount: () => {
-    if (document) {
+  componentWillMount: () => {
+    if (typeof document !== 'undefined') {
       window.utag_data = { ...utag_data }
-
+    }
+  },
+  componentDidMount: () => {
+    if (typeof document !== 'undefined') {
       const utagjs = url || `//tags.tiqcdn.com/utag/${account}/${profile}/${env}/utag.js`
       const elem = document.createElement('script')
       elem.type = 'text/javascript'
@@ -27,10 +30,14 @@ const tealium = ({
     }
   },
   utagView: (...args) => {
-    window.utag.view(...args)
+    if (typeof document !== 'undefined') {
+      window.utag.view(...args)
+    }
   },
   utagLink: (...args) => {
-    window.utag.link(...args)
+    if (typeof document !== 'undefined') {
+      window.utag.link(...args)
+    }
   },
 })
 
