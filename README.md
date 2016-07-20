@@ -1,7 +1,7 @@
 # react-metrics-service
 [![npm version](https://img.shields.io/npm/v/react-metrics-service.svg?style=flat-square)](https://www.npmjs.com/package/react-metrics-service)
-[![dependency status](https://img.shields.io/david/team-magneto/react-metrics-service.svg?style=flat-square)](https://david-dm.org/team-magneto/react-metrics-service)
-[![build status](https://img.shields.io/travis/team-magneto/react-metrics-service.svg?style=flat-square)](https://travis-ci.org/team-magneto/react-metrics-service)
+[![dependency status](https://img.shields.io/david/team-767/react-metrics-service.svg?style=flat-square)](https://david-dm.org/team-767/react-metrics-service)
+[![build status](https://img.shields.io/travis/team-767/react-metrics-service.svg?style=flat-square)](https://travis-ci.org/team-767/react-metrics-service)
 
 React adapter for metrics services like Google Analytics, Tealium or Comcast.
 
