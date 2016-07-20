@@ -1,6 +1,6 @@
 {
   "name": "react-metrics-service",
-  "version": "0.0.11-beta",
+  "version": "0.1.0",
   "description": "React adapter for metrics services like Google Analytics, Tealium or Comcast.",
   "main": "dist/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "inline-style",
     "high-order-component"
   ],
-  "author": "Team Magneto",
+  "author": "Team 767",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/team-767/react-metrics-service/issues"
