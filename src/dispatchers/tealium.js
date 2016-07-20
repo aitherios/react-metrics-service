@@ -38,7 +38,10 @@ const tealium = ({
     }
   },
   utagLink: (...args) => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined'
+      && typeof window !== 'undefined'
+      && typeof window.utag !== 'undefined'
+      && typeof window.utag.link !== 'undefined') {
       window.utag.link(...args)
     }
   },

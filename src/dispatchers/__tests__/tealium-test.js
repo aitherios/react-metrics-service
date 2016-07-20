@@ -77,4 +77,28 @@ describe('tealium dispatcher', () => {
       })
     })
   })
+
+  describe('utagLink', () => {
+    context('when window.utag.link function is defined', () => {
+      beforeEach(() => {
+        window.utag = {
+          link: jest.fn(),
+        }
+
+        subject = tealium({
+          account: 'test',
+          profile: 'first',
+          env: 'prod',
+          utag_data: { is: 'bloody', but: 'unbound' },
+        })
+      })
+
+      it('calls window.utag.link', () => {
+        subject.utagLink({ key: 'value' })
+
+        expect(window.utag.link.mock.calls.length).toEqual(1)
+        expect(window.utag.link.mock.calls[0][0]).toEqual({ key: 'value' })
+      })
+    })
+  })
 })
