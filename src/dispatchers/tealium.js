@@ -30,7 +30,10 @@ const tealium = ({
     }
   },
   utagView: (...args) => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined'
+      && typeof window !== 'undefined'
+      && typeof window.utag !== 'undefined'
+      && typeof window.utag.view !== 'undefined') {
       window.utag.view(...args)
     }
   },
