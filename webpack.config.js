@@ -9,30 +9,31 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
     library: 'MetricsService',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   externals: {
-    'react': 'react'
+    react: 'react',
+    'prop-types': 'prop-types',
   },
   module: {
     loaders: [
       {
         test: /src\/.+.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
-      }
-    ]
+        loader: 'babel',
+      },
+    ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         screw_ie8: true,
-        warnings: false
-      }
-    })
-  ]
+        warnings: false,
+      },
+    }),
+  ],
 }
