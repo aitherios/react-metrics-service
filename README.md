@@ -20,6 +20,36 @@ client.addDispatcher(googleAnalytics({ trackingID: 'UA-000000-01' }))
 export default client
 ```
 
+You can create your own metrics-service module, check some examples in `src/dispatchers`
+
+### Using the client directly
+
+Use the service directly like:
+
+```js
+import myClient from 'my-metrics'
+
+export default () => {
+  // ...
+  myClient.callDispatchers('gaSend', 'event', 'Video', 'play')
+  // ...
+}
+```
+
+With Proxy support you can also write:
+
+```js
+import myClient from 'my-metrics'
+
+export default () => {
+  // ...
+  myClient.gaSend('event', 'Video', 'play')
+  // ...
+}
+```
+
+### Using the high order component (HOC)
+
 Add `metricsServiceContext` high order component to your app root component:
 
 ```js
@@ -33,8 +63,22 @@ const App = (
 export default metricsServiceContext({ client: myClient })(App)
 ```
 
-Then you can use one of the helper high order components like:
+Then you can use the `withMetricsServiceClient` HOC:
+```js
+import { withMetricsServiceClient } from 'react-metrics-service'
 
+const Component = ({
+  metricsServiceClient
+}) => {
+  // ...
+  metricsServiceClient.gaSend('event', 'Video', 'play')
+  // ...
+}
+
+export default withMetricsServiceClient()(Component)
+```
+
+Or the `metricsServiceClick` HOC:
 ```js
 import { metricsServiceClick } from 'react-metrics-service'
 import MyComponent from 'my-component.js'
@@ -42,16 +86,30 @@ import MyComponent from 'my-component.js'
 export default metricsServiceClick('gaSend', 'event', 'Video', 'play')(MyComponent)
 ```
 
-Or use the service directly like:
+## Builtin supported clients
+
+- google analytics
+- google analytics legacy
+- google tag manager
+- tealium
+- debug log
 
 ```js
-import myClient from 'my-metrics'
+import {
+  createClient,
+  googleAnalytics,
+  googleAnalyticsLegacy,
+  googleTagManager,
+  tealium,
+  debugLog
+} from 'react-metrics-service'
 
-export default () => {
-  // ...
-  myClient.gaSend('event', 'Video', 'play')
-  // ...
-}
+const client = createClient()
+client.addDispatcher(googleAnalytics({ trackingID: 'UA-000000-01' }))
+client.addDispatcher(googleAnalyticsLegacy({ trackingID: 'UA-000000-01' }))
+client.addDispatcher(googleTagManager({ containerID: 'GTM-0000', dataLayer: {} }))
+client.addDispatcher(tealium({ account: 'acc', profile: 'pro', env: 'dev', utag_data: {} }))
+client.addDispatcher(debugLog)
 ```
 
 ## TODO
